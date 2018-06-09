@@ -12,7 +12,6 @@ version = "0.1.0"
 cortex-m = "*"
 cortex-m-rt = "*"
 panic-abort = "*"
-
 stm32f302x = { git = "https://github.com/korken89/stm32f302x", branch = "master", features = ["rt"] }
 
 [profile.dev]
