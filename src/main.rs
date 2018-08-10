@@ -2,24 +2,25 @@
 #![no_std]
 
 extern crate cortex_m;
-extern crate stm32f302x;
-
-#[macro_use(entry, exception)]
+#[macro_use]
 extern crate cortex_m_rt as rt;
+extern crate panic_halt;
+extern crate stm32f3;
 
-// makes `panic!` print messages to the host stderr using semihosting
-// extern crate panic_semihosting;
-extern crate panic_abort;
-
+use core::ptr;
 use cortex_m::asm;
 use rt::ExceptionFrame;
+use stm32f3::stm32f302;
 
-// the program entry point is ...
 entry!(main);
 
-// ... this never ending function
 fn main() -> ! {
+    let peripherals = stm32f302::Peripherals::take().unwrap();
+
     loop {
+        unsafe {
+            ptr::read_volatile(&peripherals);
+        }
         asm::bkpt();
     }
 }
@@ -27,13 +28,13 @@ fn main() -> ! {
 // define the hard fault handler
 exception!(HardFault, hard_fault);
 
-fn hard_fault(ef: &ExceptionFrame) -> ! {
-    panic!("HardFault at {:#?}", ef);
+fn hard_fault(_ef: &ExceptionFrame) -> ! {
+    panic!("hard fault");
 }
 
 // define the default exception handler
 exception!(*, default_handler);
 
-fn default_handler(irqn: i16) {
-    panic!("Unhandled exception (IRQn = {})", irqn);
+fn default_handler(_irqn: i16) {
+    panic!("default handler");
 }
