@@ -1,0 +1,20 @@
+[package]
+name = "trustflight-hal"
+categories = ["embedded", "no-std"]
+authors = ["Emil Fresk <emil.fresk@gmail.com>"]
+description = "A multirotor flight controller firmware you can trust (HAL)"
+keywords = ["arm", "cortex-m", "mav"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/korken89/trustflight_firmware"
+version = "0.1.0"
+
+[dependencies]
+cortex-m-rt = "*"
+
+[dependencies.cortex-m]
+version = "*"
+features = ["inline-asm"]
+
+[dependencies.stm32f3]
+version = "*"
+features = ["stm32f302", "rt"]

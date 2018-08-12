@@ -1,0 +1,18 @@
+[package]
+name = "trustflight"
+categories = ["embedded", "no-std"]
+authors = ["Emil Fresk <emil.fresk@gmail.com>"]
+description = "A multirotor flight controller firmware you can trust"
+keywords = ["arm", "cortex-m", "mav"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/korken89/trustflight_firmware"
+version = "0.1.0"
+
+#[dependencies]
+#cortex-m = "*"
+#cortex-m-rt = "*"
+[dependencies]
+panic-halt = "*"
+
+[dependencies.trustflight-hal]
+path = "../trustflight-hal"

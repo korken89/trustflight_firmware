@@ -1,26 +1,18 @@
 #![no_main]
 #![no_std]
 
-extern crate cortex_m;
-#[macro_use]
-extern crate cortex_m_rt as rt;
 extern crate panic_halt;
-extern crate stm32f3;
+#[macro_use]
+extern crate trustflight_hal;
 
-use core::ptr;
-use cortex_m::asm;
-use rt::ExceptionFrame;
-use stm32f3::stm32f302;
+use trustflight_hal::cortex_m::asm;
+use trustflight_hal::cortex_m_rt::ExceptionFrame;
 
 entry!(main);
 
+#[inline(never)]
 fn main() -> ! {
-    let peripherals = stm32f302::Peripherals::take().unwrap();
-
     loop {
-        unsafe {
-            ptr::read_volatile(&peripherals);
-        }
         asm::bkpt();
     }
 }

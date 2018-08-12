@@ -10,6 +10,10 @@ The aim of this project is twofold, 1) I am looking to learn Rust and how its `b
 
 From a practical perspective this is mostly a complete rewrite/redesign of the [old KFly code](https://github.com/korken89/kfly_firmware) into Rust, with better modularization and less complexity.
 
+## Layout
+
+In the `trustflight` folder is the main firmware, while in `trustflight-hal` is the low-level code for talking to the hardware, including abstrations, aka the HAL.
+
 ## Features
 
 * Runs the [cortex-m-rtfm scheduler](https://github.com/japaric/cortex-m-rtfm), practically the same as [crect (C++ version)](https://github.com/korken89/crect)
