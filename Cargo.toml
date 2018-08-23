@@ -8,11 +8,9 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/korken89/trustflight_firmware"
 version = "0.1.0"
 
-#[dependencies]
-#cortex-m = "*"
-#cortex-m-rt = "*"
 [dependencies]
-panic-halt = "*"
+panic-halt = "0.1.0"
 
 [dependencies.trustflight-hal]
-path = "hal"
+path = "./hal"
+panic-halt = "0.1.0"
