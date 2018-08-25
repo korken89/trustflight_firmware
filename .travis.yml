@@ -15,9 +15,9 @@ install:
   - rustup target add $TARGET
 
 script:
-  - cd binary; cargo check --target $TARGET
-  - cd firmware; cargo test
-  - cd board; cargo test
+  - cd binary; cargo check --target $TARGET; cd ..
+  - cd firmware; cargo test; cd ..
+  - cd board; cargo test; cd ..
 
 after_script: set +e
 
