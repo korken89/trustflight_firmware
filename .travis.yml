@@ -15,7 +15,7 @@ install:
   - rustup target add $TARGET
 
 script:
-  - cargo check --target $TARGET
+  - cd binary; cargo check --target $TARGET
 
 after_script: set +e
 
