@@ -12,5 +12,9 @@ version = "0.1.0"
 panic-halt = "0.1.0"
 
 [dependencies.trustflight-board]
-path = "./board"
+path = "../board"
+version = "0.1.0"
+
+[dependencies.trustflight-firmware]
+path = "../firmware"
 version = "0.1.0"
