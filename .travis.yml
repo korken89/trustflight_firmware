@@ -4,10 +4,11 @@ matrix:
   include:
     - env: TARGET=thumbv7em-none-eabihf
       rust: nightly
-      addons:
-        apt:
-          packages:
-            - gcc-arm-none-eabi
+
+#      addons:
+#        apt:
+#          packages:
+#            - gcc-arm-none-eabi
 
 before_install: set -e
 
@@ -16,6 +17,7 @@ install:
 
 script:
   - cd binary; cargo check --target $TARGET
+  - cd firmware; cargo test
 
 after_script: set +e
 
