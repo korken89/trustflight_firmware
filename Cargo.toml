@@ -11,6 +11,6 @@ version = "0.1.0"
 [dependencies]
 panic-halt = "0.1.0"
 
-[dependencies.trustflight-hal]
-path = "./hal"
+[dependencies.trustflight-board]
+path = "./board"
 version = "0.1.0"

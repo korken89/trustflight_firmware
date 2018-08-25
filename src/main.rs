@@ -3,9 +3,9 @@
 
 extern crate panic_halt;
 #[macro_use]
-extern crate trustflight_hal;
+extern crate trustflight_board;
 
-use trustflight_hal::cortex_m::asm;
+use trustflight_board::cortex_m::asm;
 
 entry!(|| loop {
     asm::bkpt();

@@ -1,5 +1,5 @@
 [package]
-name = "trustflight-hal"
+name = "trustflight-board"
 authors = ["Emil Fresk <emil.fresk@gmail.com>"]
 version = "0.1.0"
 
@@ -14,6 +14,6 @@ features = ["inline-asm"]
 version = "0.2.2"
 features = ["stm32f302", "rt"]
 
-[dependencies.trustflight-hal-trait]
-path = "../hal-trait"
+[dependencies.trustflight-board-trait]
+path = "../board-trait"
 version = "0.1.0"

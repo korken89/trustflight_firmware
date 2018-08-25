@@ -1,10 +1,12 @@
-//! # Trustflight HAL trait
+//! # Trustflight board trait
 //!
-//! This trait defines the required functionality of the Trustflight HAL. It is inspired by the
+//! This trait defines the required functionality of a Trustflight board. It is inspired by the
 //! architecture of [`rosflight`](https://github.com/rosflight/firmware), while being adapted and
 //! extended as necessary.
 
 #![no_std]
+
+use core::time;
 
 // TODO: Will be updated a lot
 pub trait TrustflightHAL {
@@ -12,7 +14,7 @@ pub trait TrustflightHAL {
     fn init_board(&self);
 
     // System time
-    fn time(&self);
+    fn time(&self) -> time::Duration;
 
     // Communication
     fn communication_init(&self);
