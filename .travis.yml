@@ -4,27 +4,28 @@ matrix:
   include:
     - env: TARGET=thumbv7em-none-eabihf
       rust: nightly
-      addons:
-        apt:
-          packages:
-            - gcc-arm-none-eabi
 
 before_install: set -e
 
 install:
-  - rustup target add $TARGET
+  - bash ci/install.sh
+  - export PATH="$PATH:$PWD/gcc/bin"
 
 script:
-  - cd binary; cargo check --target $TARGET; cd ..
-  - cd firmware; cargo test; cd ..
-  - cd board; cargo test; cd ..
+  - bash ci/script.sh
 
 after_script: set +e
 
-cache: cargo
+cache: cache
+
 before_cache:
-  # Travis can't cache files that are not readable by "others"
   - chmod -R a+r $HOME/.cargo
+
+branches:
+  only:
+    - master
+    - staging
+    - trying
 
 notifications:
   email:
