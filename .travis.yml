@@ -8,18 +8,27 @@ addons:
 
 matrix:
   include:
-    - env: TARGET=thumbv7em-none-eabihf
-      rust: nightly
     - env: TARGET=docs
+      script:
+        - find . -name '*.md' -print0 | xargs -0 mdcheckr
+    - env: TARGET=firmware
+      rust: nightly
+      script:
+        - cd firmware
+        - cargo check --target thumbv7em-none-eabihf
+        - cargo test
+    - env: TARGET=board
+      rust: nightly
+      script:
+        - cd board
+        - cargo check --target thumbv7em-none-eabihf
+        - cargo test
 
 before_install: set -e
 
 install:
   - bash ci/install.sh
   - export PATH="$PATH:$PWD/mdcheck"
-
-script:
-  - bash ci/script.sh
 
 after_script: set +e
 
