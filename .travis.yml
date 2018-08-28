@@ -11,6 +11,11 @@ matrix:
     - env: TARGET=docs
       script:
         - find . -name '*.md' -print0 | xargs -0 mdcheckr
+    - env: TARGET=binary
+      rust: nightly
+      script:
+        - cd binary
+        - cargo check --target thumbv7em-none-eabihf
     - env: TARGET=firmware
       rust: nightly
       script:
