@@ -4,10 +4,10 @@ authors = ["Emil Fresk <emil.fresk@gmail.com>"]
 version = "0.1.0"
 
 [dependencies]
-cortex-m-rt = "0.5.2"
+cortex-m-rt = "0.5.3"
 
 [dependencies.cortex-m]
-version = "0.5.4"
+version = "0.5.6"
 features = ["inline-asm"]
 
 [dependencies.stm32f3]
