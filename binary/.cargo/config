@@ -1,8 +1,10 @@
-[target.thumbv7em-none-eabihf]
-runner = 'arm-none-eabi-gdb'
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
 rustflags = [
   "-C", "link-arg=-Tlink.x",
 ]
 
+[target.thumbv7em-none-eabihf]
+runner = 'arm-none-eabi-gdb -x debug.gdb'
+
 [build]
-target = "thumbv7em-none-eabihf"
+target = "thumbv7em-none-eabihf" # Cortex-M4F and Cortex-M7F (with FPU)
