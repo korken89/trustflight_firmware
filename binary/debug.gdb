@@ -12,5 +12,6 @@ set print asm-demangle on
 
 load
 compare-sections
-step
+tb main
+run
 focus CMD
