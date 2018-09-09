@@ -2,12 +2,15 @@
 #![no_std]
 
 extern crate panic_halt;
-#[macro_use]
 extern crate trustflight_board;
 extern crate trustflight_firmware;
 
 use trustflight_board::cortex_m::asm;
+use trustflight_board::entry;
 
-entry!(|| loop {
-    asm::bkpt();
-});
+#[entry]
+fn main() -> ! {
+    loop {
+        asm::bkpt();
+    }
+}
