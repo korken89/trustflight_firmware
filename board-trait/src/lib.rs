@@ -6,43 +6,56 @@
 
 #![no_std]
 
-use core::time;
+#[derive(Clone, Copy)]
+pub struct ClockTicks(u64);
+
+impl ClockTicks {
+    pub fn new(ticks: u64) -> ClockTicks {
+        ClockTicks(ticks)
+    }
+}
 
 // TODO: Will be updated a lot
-pub trait TrustflightHAL {
+pub trait TrustflightBoard {
+    // New
+    fn new() -> Self;
+
+    // System clock
+    const CPU_CLK: u32;
+
     // Setup
     fn init_board(&self);
 
     // System time
-    fn time(&self) -> time::Duration;
+    fn time() -> ClockTicks;
 
     // Communication
-    fn communication_init(&self);
+    // fn communication_init(&self);
 
     // Sensors
-    fn sensors_init(&self);
-    fn new_imu_data(&self);
-    fn new_baro_data(&self);
+    // fn sensors_init(&self);
+    // fn new_imu_data(&self);
+    // fn new_baro_data(&self);
 
     // RC
-    fn rc_init(&self);
-    fn rc_read(&self);
+    // fn rc_init(&self);
+    // fn rc_read(&self);
 
     // Outputs
-    fn output_init(&self);
-    fn output_write(&self);
+    // fn output_init(&self);
+    // fn output_write(&self);
 
     // Non-volatile memory
-    fn memory_init(&self);
-    fn memory_read(&self);
-    fn memory_write(&self);
+    // fn memory_init(&self);
+    // fn memory_read(&self);
+    // fn memory_write(&self);
 
     // LEDs
-    fn led_red_on(&self);
-    fn led_red_off(&self);
-    fn led_red_toggle(&self);
+    // fn led0_on(&self);
+    // fn led0_off(&self);
+    // fn led0_toggle(&self);
 
-    fn led_green_on(&self);
-    fn led_green_off(&self);
-    fn led_green_toggle(&self);
+    // fn led1_on(&self);
+    // fn led1_off(&self);
+    // fn led1_toggle(&self);
 }
