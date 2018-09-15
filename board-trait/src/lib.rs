@@ -6,14 +6,8 @@
 
 #![no_std]
 
-#[derive(Clone, Copy)]
-pub struct ClockTicks(u64);
-
-impl ClockTicks {
-    pub fn new(ticks: u64) -> ClockTicks {
-        ClockTicks(ticks)
-    }
-}
+extern crate trustflight_utils;
+pub use trustflight_utils::time;
 
 // TODO: Will be updated a lot
 pub trait TrustflightBoard {
@@ -27,7 +21,7 @@ pub trait TrustflightBoard {
     fn init_board(&self);
 
     // System time
-    fn time() -> ClockTicks;
+    fn time() -> time::ClockTicks;
 
     // Communication
     // fn communication_init(&self);

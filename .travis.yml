@@ -28,6 +28,12 @@ matrix:
         - cd board
         - cargo check --target thumbv7em-none-eabihf
         - cargo test
+    - env: TARGET=utils
+      rust: nightly
+      script:
+        - cd utils
+        - cargo check --target thumbv7em-none-eabihf
+        - cargo test
 
 before_install: set -e
 

@@ -9,7 +9,7 @@ pub use cortex_m::interrupt::free as critical_section;
 pub use cortex_m::peripheral as corep;
 pub use cortex_m_rt::entry;
 use stm32f3::stm32f302 as mcu;
-pub use tbt::ClockTicks;
+pub use tbt::time::ClockTicks;
 pub use tbt::TrustflightBoard;
 
 //

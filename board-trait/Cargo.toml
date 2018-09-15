@@ -2,3 +2,7 @@
 name = "trustflight-board-trait"
 authors = ["Emil Fresk <emil.fresk@gmail.com>"]
 version = "0.1.0"
+
+[dependencies.trustflight-utils]
+path = "../utils"
+version = "0.1.0"

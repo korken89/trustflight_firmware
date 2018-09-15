@@ -1,0 +1,4 @@
+[package]
+name = "trustflight-utils"
+authors = ["Emil Fresk <emil.fresk@gmail.com>"]
+version = "0.1.0"
