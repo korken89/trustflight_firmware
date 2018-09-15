@@ -14,9 +14,6 @@ pub trait TrustflightBoard {
     // New
     fn new() -> Self;
 
-    // System clock
-    const CPU_CLK: u32;
-
     // Setup
     fn init_board(&self);
 

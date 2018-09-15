@@ -9,7 +9,7 @@ pub use cortex_m::interrupt::free as critical_section;
 pub use cortex_m::peripheral as corep;
 pub use cortex_m_rt::entry;
 use stm32f3::stm32f302 as mcu;
-pub use tbt::time::ClockTicks;
+pub use tbt::time::*;
 pub use tbt::TrustflightBoard;
 
 //
@@ -147,9 +147,6 @@ impl tbt::TrustflightBoard for TrustflightBoardRevA {
     fn new() -> Self {
         TrustflightBoardRevA {}
     }
-
-    // System clock speed
-    const CPU_CLK: u32 = 72_000_000;
 
     // Setup
     fn init_board(&self) {
