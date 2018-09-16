@@ -26,7 +26,7 @@ debug = true
 lto = false
 
 [profile.release]
-opt-level = "s"
+opt-level = "z"
 codegen-units = 1 # better optimizations
 debug = true
 lto = true # better optimizations

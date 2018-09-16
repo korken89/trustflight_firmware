@@ -18,28 +18,24 @@ pub use tbt::TrustflightBoard;
 
 pub struct TrustflightBoardRevA;
 
-fn init_accelerators(flash: &mut mcu::FLASH) {
-    // Enable prefetch buffer, latency to 2 WS, no half cycle reads
-    flash
-        .acr
-        .write(|w| unsafe { w.prftbe().set_bit().latency().bits(2) });
-}
-
-fn init_clocks(rcc: &mut mcu::RCC, mut dcb: corep::DCB, mut dwt: corep::DWT) {
+fn init_debug_clock(dcb: &mut corep::DCB, mut dwt: corep::DWT) {
     //
-    // Debug clocks
+    // Debug clock
     //
 
     dcb.enable_trace();
     dwt.enable_cycle_counter();
+    drop(dwt);
+}
 
+fn init_system_72mhz_clock(rcc: &mut mcu::RCC, flash: &mut mcu::FLASH) {
     //
     // Initialize PLL and Clock source
     //
 
     // Set HSE configuration to BYPASS (16 MHz oscillator) and divide by 2
-    rcc.cr.modify(|_, w| w.hseon().set_bit().hsebyp().set_bit());
-    rcc.cfgr2.modify(|_, w| unsafe { w.prediv().bits(1) });
+    rcc.cr.write(|w| w.hseon().set_bit().hsebyp().set_bit());
+    rcc.cfgr2.write(|w| unsafe { w.prediv().bits(1) });
 
     // Wait for HSE
     while rcc.cr.read().hserdy().bit_is_clear() {}
@@ -48,9 +44,14 @@ fn init_clocks(rcc: &mut mcu::RCC, mut dcb: corep::DCB, mut dwt: corep::DWT) {
     // PLL startup
     //
 
+    // Enable prefetch buffer, latency to 2 WS, no half cycle reads
+    flash
+        .acr
+        .write(|w| unsafe { w.prftbe().set_bit().latency().bits(2) });
+
     // PLL Source = HSE, PLL Multiplier = 9 (x - 2 in register)
     rcc.cfgr
-        .modify(|_, w| unsafe { w.pllsrc().bits(2).pllmul().bits(7) });
+        .write(|w| unsafe { w.pllsrc().bits(2).pllmul().bits(7) });
 
     // Enable PLL
     rcc.cr.modify(|_, w| w.pllon().set_bit());
@@ -62,25 +63,26 @@ fn init_clocks(rcc: &mut mcu::RCC, mut dcb: corep::DCB, mut dwt: corep::DWT) {
     // Clock tree setup
     //
 
-    // HCLK - no division
-    rcc.cfgr.modify(|_, w| unsafe { w.hpre().bits(0) });
-
+    // HCLK   - no division
+    // PCLK1  - /2 from SYSCLK
+    // PCLK2  - no division
     // SYSCLK - select PLL
-    rcc.cfgr.modify(|_, w| unsafe { w.sw().bits(2) });
+    rcc.cfgr.modify(|_, w| unsafe {
+        w.hpre()
+            .bits(0)
+            .ppre1()
+            .bits(4)
+            .ppre2()
+            .bits(0)
+            .sw()
+            .bits(2)
+    });
 
     // Wait for SYSCLK switch
     while rcc.cfgr.read().sws().bits() != 2 {}
+}
 
-    // PCLK1 - /2 from SYSCLK
-    rcc.cfgr.modify(|_, w| unsafe { w.ppre1().bits(4) });
-
-    // PCLK2 - no division
-    rcc.cfgr.modify(|_, w| unsafe { w.ppre1().bits(0) });
-
-    //
-    // Peripheral clocks
-    //
-
+fn init_peripheral_clocks(rcc: &mut mcu::RCC) {
     // Peripheral clock selectors
     rcc.cfgr3.modify(|_, w| unsafe {
         w.usart1sw() // SYSCLK
@@ -151,17 +153,16 @@ impl tbt::TrustflightBoard for TrustflightBoardRevA {
     // Setup
     fn init_board(&self) {
         let mut mcu_peripherals = mcu::Peripherals::take().unwrap();
-        let cortex_peripherals = cortex_m::Peripherals::take().unwrap();
+        let mut cortex_peripherals = cortex_m::Peripherals::take().unwrap();
 
-        // Core initialization
-        init_accelerators(&mut mcu_peripherals.FLASH);
-        init_clocks(
-            &mut mcu_peripherals.RCC,
-            cortex_peripherals.DCB,
-            cortex_peripherals.DWT,
-        );
+        critical_section(|_| {
+            // Clock initialization
+            init_debug_clock(&mut cortex_peripherals.DCB, cortex_peripherals.DWT);
+            init_system_72mhz_clock(&mut mcu_peripherals.RCC, &mut mcu_peripherals.FLASH);
+            init_peripheral_clocks(&mut mcu_peripherals.RCC);
 
-        // Init system modules
+            // Init system modules
+        });
     }
 
     // System time
