@@ -196,7 +196,7 @@ impl tbt::TrustflightBoard for TrustflightBoardRevA {
         critical_section(|_| {
             // Total clock cycles since start
             unsafe {
-                if cyccnt < OLD_DWT {
+                if cyccnt <= OLD_DWT {
                     DWT_OVERFLOWS += 1;
                 }
                 OLD_DWT = cyccnt;
