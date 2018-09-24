@@ -10,9 +10,10 @@ cortex-m-rt = "0.6.3"
 version = "0.5.7"
 features = ["inline-asm"]
 
-[dependencies.stm32f3]
-version = "0.2.3"
-features = ["stm32f302", "rt"]
+[dependencies.stm32f30x-hal]
+version = "0.2.0"
+git = "https://github.com/korken89/stm32f30x-hal.git"
+features = ["rt"]
 
 [dependencies.trustflight-board-trait]
 path = "../board-trait"
