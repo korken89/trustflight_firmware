@@ -4,7 +4,7 @@ authors = ["Emil Fresk <emil.fresk@gmail.com>"]
 version = "0.1.0"
 
 [dependencies]
-cortex-m-rt = "0.6.3"
+cortex-m-rt = "0.6.4"
 
 [dependencies.cortex-m]
 version = "0.5.7"
