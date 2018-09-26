@@ -161,18 +161,17 @@ impl tbt::TrustflightBoard for TrustflightBoardRevA {
             let rcc = mcu_peripherals.RCC.constrain();
             let mut flash = mcu_peripherals.FLASH.constrain();
 
-            rcc.cfgr
-                .hse(
-                    Hertz(16_000_000),
-                    HseDivider::DivideBy2,
-                    HseBypass::BypassEnable,
-                ).hclk(Hertz(72_000_000))
+            init_debug_clock(&mut cortex_peripherals.DCB, cortex_peripherals.DWT);
+
+            let clocks = rcc
+                .cfgr
+                .hse(Hertz(16_000_000), HseDivider::DivideBy2, HseBypass::Enable)
+                .hclk(Hertz(72_000_000))
                 .pclk1(Hertz(36_000_000))
                 .pclk2(Hertz(72_000_000))
                 .sysclk(Hertz(72_000_000))
                 .freeze(&mut flash.acr);
 
-            init_debug_clock(&mut cortex_peripherals.DCB, cortex_peripherals.DWT);
             // init_system_72mhz_clock(&mut mcu_peripherals.RCC, &mut mcu_peripherals.FLASH);
             // init_peripheral_clocks(&mut mcu_peripherals.RCC);
 
