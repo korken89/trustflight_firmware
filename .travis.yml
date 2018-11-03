@@ -12,24 +12,24 @@ matrix:
       script:
         - find . -name '*.md' -print0 | xargs -0 mdcheckr
     - env: TARGET=binary
-      rust: nightly
+      rust: stable
       script:
         - cd binary
         - cargo check --target thumbv7em-none-eabihf
     - env: TARGET=firmware
-      rust: nightly
+      rust: stable
       script:
         - cd firmware
         - cargo check --target thumbv7em-none-eabihf
         - cargo test
     - env: TARGET=board
-      rust: nightly
+      rust: stable
       script:
         - cd board
         - cargo check --target thumbv7em-none-eabihf
         - cargo test
     - env: TARGET=utils
-      rust: nightly
+      rust: stable
       script:
         - cd utils
         - cargo check --target thumbv7em-none-eabihf
