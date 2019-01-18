@@ -2,3 +2,4 @@
 name = "trustflight-firmware"
 authors = ["Emil Fresk <emil.fresk@gmail.com>"]
 version = "0.1.0"
+edition = "2018"

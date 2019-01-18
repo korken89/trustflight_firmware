@@ -2,9 +2,10 @@
 name = "trustflight-board"
 authors = ["Emil Fresk <emil.fresk@gmail.com>"]
 version = "0.1.0"
+edition = "2018"
 
 [dependencies]
-cortex-m-rt = "0.6.5"
+cortex-m-rt = "0.6.7"
 
 [dependencies.cortex-m]
 version = "0.5.8"

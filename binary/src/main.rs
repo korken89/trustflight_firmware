@@ -2,8 +2,6 @@
 #![no_std]
 
 extern crate panic_halt;
-extern crate trustflight_board;
-extern crate trustflight_firmware;
 
 use core::ptr::read_volatile;
 use core::sync::atomic::{self, Ordering};
